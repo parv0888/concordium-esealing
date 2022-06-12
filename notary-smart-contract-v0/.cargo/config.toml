@@ -1,0 +1,3 @@
+[build]
+rustflags = ["--remap-path-prefix=/home/<user>="]
+target = "wasm32-unknown-unknown"
