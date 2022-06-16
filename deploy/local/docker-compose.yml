@@ -1,0 +1,16 @@
+version: "3.5"
+services:
+  concordium-bridge:
+    image: concordiumtech/concordium-bridge:latest
+    container_name: concordium-bridge
+    ports:
+      - 80:80
+      - 443:443
+      - 8889:8888
+    restart: always
+    volumes:
+      - /home/parv/work/concordium/concordium-notary-service/deploy/local/ws-bridge/registry.dev.json:/registry.json
+    # environment:
+      # BRIDGE_SERVICE_HOST: "3.87.182.68:80"
+      # BRIDGE_TLS_MODE: 1
+      # BRIDGE_CERTS_DIR: /certs

@@ -1,0 +1,11 @@
+[
+    {
+        "open_key": "000000000",
+        "host": "http://localhost:3000",
+        "details": {
+            "title": "Dev Local Machine",
+            "description": "Dev Local Machine",
+            "icon_link": "https://image.flaticon.com/icons/png/512/4666/4666195.png"
+        }
+    }
+]

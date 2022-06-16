@@ -1,0 +1,6 @@
+*.js
+node_modules
+package-lock.json
+run-prod.sh
+.env.production
+dist
