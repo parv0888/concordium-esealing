@@ -146,7 +146,7 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
         setWalletState(resetWalletState());
     }
 
-    return <Card>
+    return <Card variant="outlined">
         <CardContent>
             <List>
                 <ListItem>
@@ -177,6 +177,13 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
                     : <></>}
             </List>
             <CardActions>
+            <Button
+                    type='button'
+                    variant="contained"
+                    onClick={registerWallet}
+                    disabled={state.isSigned || signedState.inProcess}
+                    hidden={state.isSigned}
+                >Register using Your Account</Button>
                 <Button
                     type='button'
                     variant="outlined"
@@ -184,13 +191,6 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
                     disabled={state.isSigned || signedState.inProcess}
                     hidden={state.isSigned}
                 >Register using Central Account</Button>
-                <Button
-                    type='button'
-                    variant="outlined"
-                    onClick={registerWallet}
-                    disabled={state.isSigned || signedState.inProcess}
-                    hidden={state.isSigned}
-                >Register using Your Account</Button>
             </CardActions>
             {signedState.inProcess && signedState.type === 'wallet' ? <UserWalletSigning
                 bridgeConnected={walletState.bridgeConnected}

@@ -1,0 +1,7 @@
+.dropzone-root {
+    border: 0 !important;
+    margin: 0;
+    padding: 0;
+    width: 100% !important;
+    background-color: rgba(251, 251, 249, 1) !important;
+}

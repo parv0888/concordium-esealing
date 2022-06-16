@@ -1,5 +1,6 @@
 import sha256 from "fast-sha256";
 import { DropzoneArea } from "mui-file-dropzone"
+import './FileUploadZone.css'
 
 export interface IUploadedFile {
     name: string;
@@ -31,8 +32,12 @@ const FileUploadZone = (props: { onUpload: (file: IUploadedFile) => void }) => {
         fileObjects={{}}
         showPreviewsInDropzone={false}
         showPreviews={false}
+        classes={{
+            root: 'dropzone-root',
+        }}
         initialFiles={[]}
-        filesLimit={1} />
+        filesLimit={1}
+    />
     )
 };
 export default FileUploadZone;

@@ -11,7 +11,7 @@ Deploys the Concordium Web to Mobile App Bridge using docker. We internally use 
 
 ### Notary Smart Contract
 A Simple Smart Contract that takes file has as input
-1. Register the hash and the sender in the Contracts State. 
+1. Register the hash and the sender in the Contracts State.
 2. Puts events out with Binary *Serialized File Hash* and *Sender Account Address* as witness
 
 ### Web
