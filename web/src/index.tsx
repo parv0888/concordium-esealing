@@ -1,14 +1,22 @@
 import { ThemeProvider } from '@emotion/react';
-import { AppBar, Stack, Typography, Container } from '@mui/material';
+import styled from '@emotion/styled';
+import { AppBar as MuiAppBar, Stack, Typography, Container, Paper, Box, Divider, Icon } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+
 import App from './App';
 import FAQ from './FAQ';
 import './index.css';
-import reportWebVitals from './reportWebVitals';
+import Logo from './Logo';
 import { theme } from "./theme";
 
-const appBarHeight = 70;
+const AppBar = styled(MuiAppBar)({
+  height: '20%',
+  width: '100%',
+  maxWidth: 'xl',
+  position: 'static',
+  boxShadow: 'none',
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,33 +25,51 @@ root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <div className="App">
-        <AppBar sx={{ height: appBarHeight }}>
+        <AppBar>
           <Stack maxWidth="xl" spacing={3} sx={{ width: "fit-content", margin: "auto" }}>
-            <Typography
-              noWrap
-              variant='h1'
-              sx={{
-                marginTop: "auto",
-                marginBottom: "auto",
-              }}> Concordium Sealing Service </Typography>
+            <Logo
+              fontSize='h1'
+              viewBox="0 0 250 45"
+            />
+            <Typography fontSize='54px' sx={{ marginTop: '0 !important' }}>
+              Sealing Service
+            </Typography>
           </Stack>
         </AppBar>
-        <Container sx={{
-          marginTop: appBarHeight + 'px',
-          paddingTop: 5,
-        }}>
+        <Box sx={{ padding: 2, }}>
+          <Container>
+            <Typography variant='h2'>
+              What is File Sealing ?
+            </Typography>
+            <Typography variant='body1'>
+              Seals are used to protect things which must not be tampered with.
+              A seal is unique to the sealer and shows the valid execution, source, importance, authenticity or witness by the sealer.
+              A seal is data, which is attached to or logically associated with other data in electronic form to ensure the latter’s origin and integrity.
+            </Typography>
+            <Typography variant='body1'>
+              If you seal a file, you can prove that it was in your possession at the time of sealing.
+            </Typography>
+          </Container>
+        </Box>
+        <Divider></Divider>
+        <Container sx={{ paddingTop: 5 }}>
           <Stack
             direction={{ md: 'row', sm: 'column', xs: 'column' }}
             spacing={1}
           >
-            <App sx={{
-              width: { md: 1 / 2, sm: 1, xs: 1 },
-              borderWidth: 8,
-              borderColor: 'primary.main',
-              borderStyle: 'solid',
-              backgroundColor: 'primary.light',
-              padding: { md: 2, sm: 0, xs: 0 }
-            }} />
+            <Paper sx={{
+              width: { md: 1 / 2, sm: 1, xs: 1 }
+            }}
+              variant="outlined"
+              elevation={3}>
+              <App sx={{
+                backgroundColor: 'primary.light',
+                paddingLeft: 2,
+                paddingRight: 2,
+                paddingBottom: 2
+              }} />
+            </Paper>
+            <Divider></Divider>
             <FAQ sx={{ width: { md: 1 / 2, sm: 1, xs: 1 } }} />
           </Stack>
         </Container>
@@ -51,8 +77,3 @@ root.render(
     </ThemeProvider>
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

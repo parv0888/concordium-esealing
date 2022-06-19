@@ -1,8 +1,7 @@
-import { Paper, Stack, SxProps } from "@mui/material";
+import { Stack, SxProps } from "@mui/material";
 import { useState } from "react";
 import FileDisplay from "./components/FileDisplay";
 import FileUploadZone, { IUploadedFile } from "./components/FileUploadZone";
-
 
 interface IFileState extends IUploadedFile { };
 interface IState {

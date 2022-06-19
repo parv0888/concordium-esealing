@@ -1,10 +1,6 @@
-import * as React from "react"
-
 const Logo = (props: any) => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
-        width={216}
-        height={43}
         fill="none"
         {...props}
     >

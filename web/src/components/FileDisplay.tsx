@@ -1,6 +1,7 @@
-import { Button, Card, CardActions, CardContent, Chip, List, ListItem, ListItemText, Typography } from "@mui/material";
+import { Badge, Box, Button, Card, CardActions, CardContent, Chip, List, ListItem, ListItemText, Snackbar, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import ConcordiumWalletClient from "@pioneeringtechventures/concordium-wallet-client";
+import CopyIcon from '@mui/icons-material/ContentCopy';
 
 import { IUploadedFile } from "./FileUploadZone";
 import { registerData } from '../client/client';
@@ -33,6 +34,12 @@ interface IState {
     isSigned: boolean;
 }
 
+const getGuiHash = (hash: string) => {
+    return `${hash.substring(0, 5)}...${hash.substring(hash.length - 5)}`;
+}
+
+
+
 const FileDisplay = (props: { file: IUploadedFile }) => {
     const { file } = props;
     const [state, setState] = useState<IState>({
@@ -41,6 +48,10 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
     const [signedState, setSignedState] = useState<ISignState>({ inProcess: false });
     const [walletState, setWalletState] = useState<IWalletSigningState>({});
 
+    const [copiedMsgShown, setCopiedMsgShown] = useState(false);
+    const copyToClipboard = (content: string) => {
+        setCopiedMsgShown(true);
+    }
 
     const registerCentral = () => {
         setSignedState({ inProcess: true });
@@ -146,23 +157,40 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
         setWalletState(resetWalletState());
     }
 
-    return <Card variant="outlined">
+    return <Card variant="elevation" elevation={1}>
         <CardContent>
+            <Box>
+                <Stack spacing={1} direction='row' maxWidth={'100%'} width={'100%'}>
+                    <Chip label={`Size : ${file.size / 1000} KB`} variant={"outlined"} />
+                    <Chip label={`Type : ${file.type}`} variant={"outlined"} />
+                    <Chip
+                        label={`Hash : ${getGuiHash(file.hash)}`}
+                        variant={"outlined"}
+                        onClick={_=>copyToClipboard(file.hash)}
+                        onDelete={_ => copyToClipboard(file.hash)}
+                        deleteIcon={<CopyIcon />}
+                    />
+                    <Snackbar
+                        open={copiedMsgShown}
+                        autoHideDuration={3000}
+                        onClose={_ => setCopiedMsgShown(false)}
+                        message='Hash Copied to clipboard' />
+                </Stack>
+            </Box>
             <List>
                 <ListItem>
-                    <ListItemText primary={<Typography sx={{ fontSize: 24 }} component="div">
-                        {file.name}
-                    </Typography>} secondary='Name'></ListItemText>
+                    <ListItemText
+                        primary={<Typography
+                            sx={{
+                                fontSize: 24,
+                                textOverflow: 'ellipsis',
+                                overflow: 'hidden'
+                            }}>
+                            {file.name}
+                        </Typography>
+                        }
+                        secondary='Name'></ListItemText>
                 </ListItem>
-                {/* <ListItem>
-                    <ListItemText primary={file.size} secondary='Size'></ListItemText>
-                </ListItem>
-                <ListItem>
-                    <ListItemText primary={file.type} secondary='Type'></ListItemText>
-                </ListItem> */}
-                {/* <ListItem>
-                    <ListItemText primary={file.hash} secondary='Hash'></ListItemText>
-                </ListItem> */}
                 <ListItem>
                     <ListItemText
                         primary={state.isSigned ? 'Registered' : 'Not Registered'}
@@ -170,14 +198,14 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
                 </ListItem>
                 {state.isSigned && signedState.txnHash
                     ? <ListItem>
-                        <ListItemText 
-                            primary={<TxnHashDisplay txnHash={signedState.txnHash}/>} 
-                            secondary='Transaction Hash'/>
+                        <ListItemText
+                            primary={<TxnHashDisplay txnHash={signedState.txnHash} />}
+                            secondary='Transaction Hash' />
                     </ListItem>
                     : <></>}
             </List>
             <CardActions>
-            <Button
+                <Button
                     type='button'
                     variant="contained"
                     onClick={registerWallet}
