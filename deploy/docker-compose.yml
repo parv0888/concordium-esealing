@@ -1,0 +1,10 @@
+version: "3.5"
+services:
+  concordium-bridge:
+    image: concordiumtech/concordium-bridge:latest
+    container_name: concordium-bridge
+    ports:
+      - 8889:8888
+    restart: always
+    volumes:
+      - <$REGISTRY_FILE_PATH>:/registry.json

@@ -16,6 +16,25 @@ const AppBar = styled(MuiAppBar)({
   maxWidth: 'xl',
   position: 'static',
   boxShadow: 'none',
+  backgroundImage: 'url("header-background.jpeg")',
+  backgroundColor: 'transparent',
+  backgroundBlendMode: 'lighten'
+
+});
+
+const AppBarContent = styled('div')({
+  marginTop: 'auto',
+  marginBottom: 'auto',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+})
+
+const PageHeading = styled(Typography)({
+  fontSize: 60,
+  marginTop: '0 !important',
+  fontWeight: 700,
+  color: 'black',
+  lineHeight: 'normal'
 });
 
 const root = ReactDOM.createRoot(
@@ -24,17 +43,23 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <div className="App">
+      <div className="App" style={{ minWidth: '500px' }}>
         <AppBar>
-          <Stack maxWidth="xl" spacing={3} sx={{ width: "fit-content", margin: "auto" }}>
-            <Logo
-              fontSize='h1'
-              viewBox="0 0 250 45"
-            />
-            <Typography fontSize='54px' sx={{ marginTop: '0 !important' }}>
-              Sealing Service
-            </Typography>
-          </Stack>
+          <AppBarContent>
+            <Stack maxWidth="xl" spacing={3} sx={{
+              width: "fit-content",
+              margin: "auto",
+              backgroundColor: 'rgba(255, 255, 255, 0.6)',
+              padding: '20px',
+              borderRadius: 3
+            }}>
+              <Logo
+                fontSize='h1'
+                viewBox="0 0 250 45"
+              />
+              <PageHeading> Sealing Service </PageHeading>
+            </Stack>
+          </AppBarContent>
         </AppBar>
         <Box sx={{ padding: 2, }}>
           <Container>
@@ -57,11 +82,7 @@ root.render(
             direction={{ md: 'row', sm: 'column', xs: 'column' }}
             spacing={1}
           >
-            <Paper sx={{
-              width: { md: 1 / 2, sm: 1, xs: 1 }
-            }}
-              variant="outlined"
-              elevation={3}>
+            <Paper sx={{ width: { md: 1 / 2, sm: 1, xs: 1 } }} variant="outlined">
               <App sx={{
                 backgroundColor: 'primary.light',
                 paddingLeft: 2,

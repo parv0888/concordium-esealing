@@ -9,7 +9,6 @@ import { default as cors } from 'cors';
 import { RegisterDataPath, RegisterDataRequest, RegisterDataResponse } from './shared-client-server-types';
 import { registerData } from './smart-contract-utils';
 
-// console.log(dotenv.config());
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +17,6 @@ const port = process.env.PORT || 5000;
 
 //Register Data
 app.post(RegisterDataPath, async (req, res) => {
-
     try {
         const registerDataRes = await registerData((req.body as RegisterDataRequest).hash);
         res.json({
