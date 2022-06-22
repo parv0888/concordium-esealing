@@ -19,7 +19,6 @@ const AppBar = styled(MuiAppBar)({
   backgroundImage: 'url("header-background.jpeg")',
   backgroundColor: 'transparent',
   backgroundBlendMode: 'lighten'
-
 });
 
 const AppBarContent = styled('div')({
