@@ -1,28 +1,15 @@
-# Concordium Account Identity Service
+# Concordium Sealing Service Web Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Debug locally
+* Clone Repo
+* `cd ./web`
+* `npm install`
+* Change the [.env](.env) file according to your env setup
+* `npm run dev`
 
 ### Env Variables
-change the [.env](./env) file
+Change the [.env](./env) file
+* `REACT_APP_TXN_LOOKUP_URL` : Not current being used
+* `REACT_APP_CENTRAL_SIGNING_SERVICE_URL` : url for thheh deployed [Central Signing Service](../central-signing-service-v1/README.md)
+* `REACT_APP_CONCORDIUM_BRIDGE_URL` : url for the deplaoyed [Bridge](../deploy/README.md)
+* `REACT_APP_CONCORDIUM_BRIDGE_ACCESS_KEY` : depends on the values defined in bridge's [registory.json](../deploy/registry.json)
