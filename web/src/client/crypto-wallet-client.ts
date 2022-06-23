@@ -14,6 +14,31 @@ interface IEvents {
     onOperationRejected: (client: ConcordiumWalletClient) => void,
 }
 
+const deSerAccessKey = (accessKey: string) => {
+    const hkArray = accessKey.trim()
+        .split(';')
+        .map(hk => {
+            const parts = hk.split('#');
+            if (parts.length < 2) {
+                return null;
+            }
+
+            return {
+                host: parts[0],
+                key: parts[1]
+            }
+        })
+        .filter(o=>!!o)
+        .filter(o=>o?.host === window.location.host)
+        ;
+
+    if(hkArray.length < 1) {
+        console.error(`no key found for host : ${window.location.host}`);
+    }
+
+    return hkArray[0]?.key || '';
+}
+
 export const getWalletClient = (events: IEvents) => {
     class QrCodeHandler {
         public open = (msg: IBridgeMessage) => {
@@ -25,7 +50,7 @@ export const getWalletClient = (events: IEvents) => {
 
     const client = new ConcordiumWalletClient({
         bridgeHost: CONCORDIUM_BRIDGE_URL,
-        bridgeConnectionKey: CONCORDIUM_BRIDGE_ACCESS_KEY,
+        bridgeConnectionKey: deSerAccessKey(CONCORDIUM_BRIDGE_ACCESS_KEY),
         qrModal: QrCodeHandler,
     });
 

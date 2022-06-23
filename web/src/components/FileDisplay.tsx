@@ -157,7 +157,7 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
         setWalletState(resetWalletState());
     }
 
-    return <Card variant="elevation" elevation={1}>
+    return <Card variant="elevation">
         <CardContent>
             <Box>
                 <Stack spacing={1} direction='row' maxWidth={'100%'} width={'100%'}>
@@ -166,7 +166,7 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
                     <Chip
                         label={`Hash : ${getGuiHash(file.hash)}`}
                         variant={"outlined"}
-                        onClick={_=>copyToClipboard(file.hash)}
+                        onClick={_ => copyToClipboard(file.hash)}
                         onDelete={_ => copyToClipboard(file.hash)}
                         deleteIcon={<CopyIcon />}
                     />
@@ -206,6 +206,7 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
             </List>
             <CardActions>
                 <Button
+                    fullWidth
                     type='button'
                     variant="contained"
                     onClick={registerWallet}
@@ -213,6 +214,7 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
                     hidden={state.isSigned}
                 >Register using Your Account</Button>
                 <Button
+                    fullWidth
                     type='button'
                     variant="outlined"
                     onClick={registerCentral}

@@ -1,0 +1,14 @@
+version: "3.5"
+services:
+  concordium-bridge:
+    image: concordiumtech/concordium-bridge:latest
+    container_name: concordium-bridge
+    ports:
+      - 8889:8888
+    restart: always
+    volumes:
+      - $REGISTRY_FILE_PATH/registry.json:/registry.json
+    environment:
+      BRIDGE_SERVICE_HOST: "bridge.test.com"
+      BRIDGE_TLS_MODE: 0
+      BRIDGE_TLS_LINKS: 1
