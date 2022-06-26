@@ -1,3 +1,4 @@
+NODE_ENV=production
 rm -rf dist
 mkdir dist
 npx tsc --outDir dist
