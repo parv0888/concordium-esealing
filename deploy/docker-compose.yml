@@ -1,5 +1,13 @@
 version: "3.5"
 services:
+  frontend:
+    build: ../web
+    ports:
+      - 3000:3000
+  backend:
+    build: ../central-signing-service-v1
+    ports:
+      - 8081:80
   concordium-bridge:
     image: concordiumtech/concordium-bridge:latest
     container_name: concordium-bridge

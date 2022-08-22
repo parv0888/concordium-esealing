@@ -13,7 +13,7 @@
   "author": "Parv (parv@chainorders.com)",
   "license": "ISC",
   "dependencies": {
-    "@concordium/node-sdk": "1.0.0",
+    "@concordium/node-sdk": "3.0.2",
     "cbor": "8.1.0",
     "cors": "2.8.5",
     "dotenv": "16.0.1",

@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Card, CardActions, CardContent, Chip, List, ListItem, ListItemText, Snackbar, Stack, Typography } from "@mui/material";
+import { Alert, Box, Button, Card, CardActions, CardContent, Chip, List, ListItem, ListItemText, Snackbar, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import ConcordiumWalletClient from "@pioneeringtechventures/concordium-wallet-client";
 import CopyIcon from '@mui/icons-material/ContentCopy';
@@ -32,19 +32,16 @@ interface ISignState {
 
 interface IState {
     isSigned: boolean;
+    error?: string;
 }
 
 const getGuiHash = (hash: string) => {
     return `${hash.substring(0, 5)}...${hash.substring(hash.length - 5)}`;
 }
 
-
-
 const FileDisplay = (props: { file: IUploadedFile }) => {
     const { file } = props;
-    const [state, setState] = useState<IState>({
-        isSigned: false,
-    });
+    const [state, setState] = useState<IState>({ isSigned: false });
     const [signedState, setSignedState] = useState<ISignState>({ inProcess: false });
     const [walletState, setWalletState] = useState<IWalletSigningState>({});
 
@@ -53,17 +50,35 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
         setCopiedMsgShown(true);
     }
 
-    const registerCentral = () => {
-        setSignedState({ inProcess: true });
+    const [errorMsg, setErrorMsg] = useState('');
 
-        registerData(file.hash).then(res => {
+    const registerCentral = () => {
+        const setRegisterCentralSuccess = (txnHash: string) => {
             setState({ isSigned: true });
-            setSignedState({
-                type: "central",
-                inProcess: false,
-                txnHash: res.data.txnHash
+            setSignedState({ txnHash, inProcess: false, type: "central" });
+        }
+
+        const setRegisterCentralError = (errMsg: string) => {
+            setState({ isSigned: false });
+            setSignedState({ inProcess: false });
+            setErrorMsg(errMsg);
+        }
+
+        setSignedState({ inProcess: true });
+        setErrorMsg('');
+
+        registerData(file.hash)
+            .then(res => {
+                if (!res.data.txnSentStatus) {
+                    setRegisterCentralError('Transaction rejected by node.');
+                    return;
+                }
+
+                setRegisterCentralSuccess(res.data.txnHash);
+            })
+            .catch(e => {
+                setRegisterCentralError((!!e && !!e.message) ? e.message : 'An error occured.');
             });
-        });
     }
 
     const updateWalletState = (newState: IWalletSigningState) => {
@@ -234,6 +249,15 @@ const FileDisplay = (props: { file: IUploadedFile }) => {
                 onCancel={() => cancelRegisterWallet()}
                 onDone={() => cancelRegisterWallet()}
             /> : <></>}
+            <Snackbar
+                open={!!errorMsg}
+                autoHideDuration={3000}
+                onClose={_ => setErrorMsg('')}>
+                <Alert
+                    onClose={_ => setErrorMsg('')}
+                    severity="error"
+                    sx={{ width: '100%' }}>{errorMsg}</Alert>
+            </Snackbar>
         </CardContent>
     </Card >
 }
